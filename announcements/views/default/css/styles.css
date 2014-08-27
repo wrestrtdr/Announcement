@@ -1,0 +1,42 @@
+/* Announcement Base Plugin */
+
+
+/*** client side ***/
+aside  li {
+    border-bottom: 1px solid #E1E1E1;
+	list-style: none;
+}
+
+aside li a {
+    display: block;
+    padding: 16px 15px;
+    text-decoration: none;
+    color: #9E9E9E;
+    font-size: 17px;
+    transition: all 0.2s ease-in-out 0s;
+}
+aside  li a:hover {
+    background: none repeat scroll 0% 0% #ecf7ff;
+    color: #454545;
+}
+
+aside li a.active {
+    background-color: #F7F7F7;
+    color: #454545;
+}
+aside  li ul, aside  li ol {
+    border-top: 1px solid #F7F7F7;
+    overflow: hidden;
+    max-height: 0px;
+}
+aside li ul.open {
+    max-height: 999px !important;
+    border-top: 1px solid #E1E1E1;
+    z-index: 10;
+}
+
+.list-group .list-group-item  {
+	border-bottom: 1px solid #E4E4E4;
+	line-height: 2em !important;
+}
+

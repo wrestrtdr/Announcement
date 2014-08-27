@@ -1,0 +1,215 @@
+		<?php
+		echo $this->Html->ifSet($message);
+		//print_r($vars);
+		$widget_title = $this->_("AnnouncementsPlugin.add.boxtitle_add", true);
+			
+		$this->Widget->clear();
+		$this->Widget->create($widget_title);
+		
+		$this->Form->create(null, array('id' => "add_announcement", 'enctype' => "multipart/form-data"));
+		?>
+		<div class="inner">
+			<div class="pad">
+				<ul>
+					<li>
+						<?php
+						$this->Form->fieldRadio("type", "public", ($this->Html->ifSet($vars['vars']->type, "public") == "public"), array('id' => "public", 'class' => "type"));
+						$this->Form->label($this->_("AnnouncementsPlugin.add.field_public", true), "public", array('class' => "inline"));
+						$this->Form->fieldRadio("type", "logged_in", ($this->Html->ifSet($vars['vars']->type) == "logged_in"), array('id' => "logged_in", 'class' => "type"));
+						$this->Form->label($this->_("AnnouncementsPlugin.add.field_logged_in", true), "logged_in", array('class' => "inline"));
+						?>
+					</li>
+					<li class="download_logged_in" style="display:none;">
+						<?php
+						$this->Form->fieldCheckbox("available_to_client_groups", "1", ($this->Html->ifSet($vars['vars']->available_to_client_groups) == "1"), array('id' => "available_to_client_groups"));
+						$this->Form->label($this->_("AnnouncementsPlugin.add.field_available_to_client_groups", true), "available_to_client_groups", array('class' => "inline"));
+						?>
+					</li>				
+					<li id="download_client_groups" style="display:none;">
+						<table id="assign_client_groups">
+							<tr>
+								<td><?php $this->Form->label($this->_("AnnouncementsPlugin.add.text_clientgroups", true), "assigned");?></td>
+								<td></td>
+								<td><?php $this->Form->label($this->_("AnnouncementsPlugin.add.text_availableclientgroups", true), "available");?></td>
+							</tr>
+							<tr>
+								<td>
+									<?php $this->Form->fieldMultiSelect("announcement_groups[]", $this->Html->ifSet($vars['vars']->announcement_groups), array(), array('id' => "assigned_client_groups"));?>
+								</td>
+								<td><a href="#" class="client_group move_left">&nbsp;</a> &nbsp; <a href="#" class="client_group move_right">&nbsp;</a></td>
+								<td>
+									<?php $this->Form->fieldMultiSelect("available_client_groups[]", $this->Html->ifSet($vars['client_groups']), array(), array('id' => "available_client_groups"));?>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li class="download_logged_in" style="display:none;">
+						<?php
+						$this->Form->fieldCheckbox("available_to_packages", "1", ($this->Html->ifSet($vars['vars']->available_to_packages) == "1"), array('id' => "available_to_packages"));
+						$this->Form->label($this->_("AnnouncementsPlugin.add.field_available_to_packages", true), "available_to_packages", array('class' => "inline"));
+						?>
+					</li>
+					<li id="download_packages" style="display:none;">
+						<table id="assign_packages">
+							<tr>
+								<td><?php $this->Form->label($this->_("AnnouncementsPlugin.add.text_packagegroups", true), "assigned");?></td>
+								<td></td>
+								<td><?php $this->Form->label($this->_("AnnouncementsPlugin.add.text_availablepackages", true), "available");?></td>
+							</tr>
+							<tr>
+								<td>
+									<?php $this->Form->fieldMultiSelect("announcement_packages[]", $this->Html->ifSet($vars['vars']->announcement_packages), array(), array('id' => "assigned_packages"));?>
+								</td>
+								<td><a href="#" class="packages move_left">&nbsp;</a> &nbsp; <a href="#" class="packages move_right">&nbsp;</a></td>
+								<td>
+									<?php $this->Form->fieldMultiSelect("available_packages[]", $this->Html->ifSet($vars['packages']), array(), array('id' => "available_packages"));?>
+								</td>
+							</tr>
+						</table>
+					</li>				
+					<li>
+						<?php $this->Form->label($this->_("AnnouncementsPlugin.add.title", true), "title");?>
+						<?php $this->Form->fieldText("title", $this->Html->ifSet($vars['vars']->title), array('id' => "title"));?>
+					</li>
+					<li>
+						<h4><a href="#" ><?php $this->_("AnnouncementsPlugin.add.body");?></a></h4>
+						<?php
+						$show_description = (!empty($vars['vars']->description) || !empty($vars['vars']->description_html));
+						$current_text_description = (!empty($vars['vars']->description) && empty($vars['vars']->description_html));
+						?>						
+						<div id="description_content" class="pad_top">
+							<div class="tab_content">
+								<ul class="tabs">
+									<li<?php echo !$current_text_description ? " class=\"current\"" : "";?>>
+										<a href="#"><?php $this->Form->label($this->_("AnnouncementsPlugin.add.field_description_html", true), "body_html");?></a>
+									</li>
+								</ul>
+								<div class="inner_content">
+									<div><?php $this->Form->fieldTextarea("body", $this->Html->ifSet($vars['vars']->body), array('id'=>"body", 'class'=>"wysiwyg"));?></div>
+								</div>
+							</div>
+						</div>									
+					</li>
+					<li>
+						<?php $this->Form->label($this->_("AnnouncementsPlugin.add.active", true), "active", array('class'=>"inline"));?>
+						<?php $this->Form->fieldCheckbox("active", "1", ($this->Html->ifSet($vars['vars']->active, "0") == "1"), array('id'=>"active"));?>	
+					</li>					
+				</ul>
+			</div>
+			
+			<div class="button_row">
+				<a class="btn_right submit" href="#"><?php $this->_("AnnouncementsPlugin.add.submit_add");?></a>
+				<a class="btn_right" href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/admin_main/articles/");?>"><?php $this->_("AnnouncementsPlugin.add.submit_cancel");?></a>
+			</div>
+		</div>
+		<?php
+		$this->Form->end();
+		$this->Widget->end();
+		?>
+		
+		<?php
+		$this->Javascript->setInline("
+		$(document).ready(function() {		
+			$('textarea.wysiwyg').ckeditor(function() {}, {language: '" . substr(Configure::get("Blesta.language"), 0, 2) . "'});
+			$('div.tab_content').blestaTabbedContent();
+		});
+		");
+		?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#add_download').submit(function() {
+		$('#assigned_client_groups option').attr('selected', 'selected');
+		$('#assigned_packages option').attr('selected', 'selected');
+	});
+	
+	// Show selected fields
+	if ($('#logged_in').attr('checked'))
+		showLoggedInFields(true);
+	if ($('#path').attr('checked'))
+		showFileFields("path", true);
+
+	
+	// Move client groups from right to left
+	$('.client_group.move_left').click(function() {
+		$('#available_client_groups option:selected').appendTo($('#assigned_client_groups'));
+		return false;
+	});
+	// Move client_groups from left to right
+	$('.client_group.move_right').click(function() {
+		$('#assigned_client_groups option:selected').appendTo($('#available_client_groups'));
+		return false;
+	});
+	
+	// Move packages from right to left
+	$('.packages.move_left').click(function() {
+		$('#available_packages option:selected').appendTo($('#assigned_packages'));
+		return false;
+	});
+	// Move packages from left to right
+	$('.packages.move_right').click(function() {
+		$('#assigned_packages option:selected').appendTo($('#available_packages'));
+		return false;
+	});
+	
+	// Hide/show logged in fields
+	$('.type').change(function() {
+		if ($(this).val() == "logged_in")
+			showLoggedInFields(true);
+		else
+			showLoggedInFields(false);
+	});
+	
+	// Hide/show client groups/packages
+	$('#available_to_client_groups').change(function() {
+		if ($(this).attr('checked'))
+			showAvailableGroups("client_groups", true);
+		else
+			showAvailableGroups("client_groups", false);
+	});
+	$('#available_to_packages').change(function() {
+		if ($(this).attr('checked'))
+			showAvailableGroups("packages", true);
+		else
+			showAvailableGroups("packages", false);
+	});
+	
+});
+
+function showLoggedInFields(show) {
+	if (show) {
+		// Show checkboxes
+		$('.download_logged_in').show();
+		
+		// Show available/selected items
+		if ($('#available_to_client_groups').attr('checked'))
+			showAvailableGroups("client_groups", true);
+		if ($('#available_to_packages').attr('checked'))
+			showAvailableGroups("packages", true);
+	}
+	else {
+		// Hide checkboxes
+		$('.download_logged_in').hide();
+		showAvailableGroups("client_groups", false);
+		showAvailableGroups("packages", false);
+	}
+}
+
+function showAvailableGroups(type, show) {
+	switch (type) {
+		case "client_groups":
+			if (show)
+				$('#download_client_groups').show();
+			else
+				$('#download_client_groups').hide();
+			break;
+		case "packages":
+			if (show)
+				$('#download_packages').show();
+			else
+				$('#download_packages').hide();
+			break;
+	}
+}
+
+
+</script>		

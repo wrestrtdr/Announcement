@@ -1,0 +1,77 @@
+		<?php
+		echo $this->Html->ifSet($message);		
+		$tabs = array(
+			array('name' => $this->_("AnnouncementsPlugin.index.settings", true), 'current'=>($this->Html->ifSet($status) == "settings" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/announcements/admin_main/settings/")),		
+			array('name' => $this->_("AnnouncementsPlugin.index.announcements", true) . " <span>(" . $this->Html->ifSet($announcements, true) . ")</span>",  'current'=>($this->Html->ifSet($status) == "announcements" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/announcements/admin_main/announcements/" )),		
+			array('name' => $this->_("AnnouncementsPlugin.index.permissions", true), 'current'=>($this->Html->ifSet($status) == "permissions" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/announcements/admin_main/permissions/"))
+		);		
+				
+		$link_buttons = array(
+			array('name'=>$this->_("AnnouncementsPlugin.index.add_announcement", true),  'attributes'=>array('href'=> $this->Html->safe($this->base_uri . "plugin/announcements/admin_main/addannouncement/") , 'class'=>"add_download"))
+		);
+				
+		$this->Widget->clear();
+		$this->Widget->setLinks($tabs);
+		$this->Widget->setLinkButtons($link_buttons);				
+		$this->Widget->create($this->_("AnnouncementsPlugin.announcements.boxtitle_announcements", true), array('id'=>"announcements"), $this->Html->ifSet($render_section, null));
+		?>
+		
+			<?php
+			if ($this->Html->ifSet($lesannouncements, false) && $lesannouncements > 0) {		
+			?>
+			<table class="table" id="announcement">
+				<tr class="heading_row">
+					<td><span><?php $this->_("AnnouncementsPlugin.announcements.heading_announcement");?></span></td>
+					<td><span><?php $this->_("AnnouncementsPlugin.announcements.heading_title");?></span></td>
+					<td><span><?php $this->_("AnnouncementsPlugin.announcements.heading_date_added");?></span></td>						
+					<td><span><?php $this->_("AnnouncementsPlugin.announcements.heading_public");?></span></td>
+					<td><span><?php $this->_("AnnouncementsPlugin.announcements.heading_active");?></span></td>					
+					<td class="last"><span><?php $this->_("AnnouncementsPlugin.announcements.heading_options");?></span></td>
+				</tr>
+				<?php
+				// Display all announcements
+				for ($i=0; $i<count($lesannouncements); $i++) {
+				?>
+				<tr class="<?php echo $this->Html->concat(" ", ($i%2 == 1) ? "odd_row" : "", "expand", "package_pricing");?>">
+					<td><?php $this->Html->_($lesannouncements[$i]->id);?></td>
+					<td><?php $this->Html->_($lesannouncements[$i]->title);?></td>
+					<td><?php $this->Html->_($lesannouncements[$i]->date_added);?></td>
+					<td><?php echo ($lesannouncements[$i]->public == 1  ? "Public" : "Restricted");?></td>
+					<td class="icon"><div class="<?php echo ($lesannouncements[$i]->active == 1  ? "active" : "inactive");?>">&nbsp;</div></td>					
+					<td class="last">
+						<a href="<?php echo $this->Html->safe($this->Html->safe($this->base_uri . "plugin/announcements/admin_main/editannouncement/" . $this->Html->ifSet($lesannouncements[$i]->id) . "/"));?>"><?php $this->_("AnnouncementsPlugin.announcements.edit");?></a>,
+						<?php
+						$this->Form->create($this->base_uri . "plugin/announcements/admin_main/deleteannouncement");
+						$this->Form->fieldHidden("id", $this->Html->_($lesannouncements[$i]->id, true));
+						?>
+						<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/admin_main/deleteannouncement/" . $this->Html->ifSet($lesannouncements[$i]->id) . "/");?>" class="manage" rel="<?php echo $this->Html->safe($this->_("AnnouncementsPlugin.modal.delete_announcement", true));?>"><?php $this->_("AnnouncementsPlugin.announcements.delete");?></a>
+						<?php
+						$this->Form->end();
+						?>
+					</td>
+				</tr>
+				<?php
+				}
+				?>
+			</table>
+			<?php
+				// Set pagination
+				$this->Pagination->build();
+			}	
+			else {
+			?>
+				<div class="empty_section">
+					<div class="empty_box"><?php $this->_("AnnouncementsPlugin.announcements.no_announcements");?></div>
+				</div>
+			<?php
+			}
+			?>		
+
+		<?php
+		$this->Widget->end();
+		?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#announcement a.manage[rel]').blestaModalConfirm({base_url: '<?php echo $this->Html->safe($this->base_uri);?>', close: '<?php $this->_("AppController.modal.text_close");?>', submit: true});
+	});
+</script>

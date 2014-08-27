@@ -1,0 +1,91 @@
+
+			<?php
+			// Don't show this container when only rendering the widget section
+			if (!$this->Html->ifSet($render_section)) {
+				?>
+				<div class="col-md-12">
+				<?php
+			}
+					echo $this->Html->ifSet($message);
+					
+					$this->WidgetClient->clear();
+					$this->WidgetClient->setStyleSheet($this->view_dir . "css/styles.css", array('id' => "announcements_styles"));				
+					$this->WidgetClient->create($this->_("ClientMain.view.boxtitle_announcement", true, $this->Html->ifSet($announcement->title)), array('id'=>"announcements_client_main_article"), $this->Html->ifSet($render_section, null));
+					$this->WidgetClient->startBody();
+					?>
+					<div class="announcement">
+						<aside>		
+							<div class="col-md-3 ">				
+								<div class="panel panel-default" id="accordion">
+									<ul class="list-group">		
+										<li>
+											<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_main/");?>"  >
+												<?php $this->_("ClientMain.view.root_directory");?>
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-home"></span>
+												</span>	
+											</a>								
+										</li>
+										<li>
+											<a href="#" >										
+												<?php $this->_("ClientMain.view.date");?><?php $this->Html->_($announcement->date_added);?>
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-time"></span>
+												</span>						
+											</a>		
+										</li>									
+
+									</ul>
+								</div>
+							</div>
+						</aside>
+						<div class="col-md-9 ">
+							<ol class="breadcrumb">
+								<li>
+									<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_main/index/");?>">
+										<?php $this->_("ClientMain.view.root_directory");?>
+									</a>
+								</li>
+								<li  class="active" >
+									<?php $this->Html->_($announcement->title);?> 			
+								</li>						
+							</ol>
+							<div class="well well-sm">
+								<h2><?php $this->Html->_($announcement->title);?></h2>								
+							</div>	
+
+							<?php
+							if (!empty($announcement)) {
+								?>					
+							<div class="well well-sm">	
+								<div class="article_view">
+									<?php echo $this->TextParser->encode("markdown", $this->Html->safe($announcement->body, true));?>
+								</div>								
+							</div>		
+								<?php
+							}
+							else {
+								?>
+								<div class="col-md-12">
+									<h3><?php $this->_("ClientMain.view.announcements");?></h3>
+									<div class="alert alert-info">
+										<p><?php $this->_("ClientMain.view.no_announcement");?></p>
+									</div>
+								</div>
+								<?php
+							}
+							?>							
+						</div>
+					</div>
+	
+					<?php
+					$this->WidgetClient->endBody();
+					$this->WidgetClient->end();
+				
+			// Don't show this container when only rendering the widget section
+			if (!$this->Html->ifSet($render_section)) {
+					?>
+				</div>
+				<?php
+			}
+			?>

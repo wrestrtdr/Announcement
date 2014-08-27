@@ -1,0 +1,64 @@
+
+			<?php
+			
+			// Don't show this container when only rendering the widget section
+			if (!$this->Html->ifSet($render_section)) {
+				?>
+				<div class="col-md-12">
+				<?php
+			}
+				echo $this->Html->ifSet($message);
+				
+				$this->WidgetClient->clear();		
+				$this->WidgetClient->setStyleSheet($this->view_dir . "css/styles.css");
+				$this->WidgetClient->create($this->_("ClientMain.index.announcements", true), array('id'=>"announcements_client_main"), $this->Html->ifSet($render_section, null));
+				$this->WidgetClient->startBody();
+				?>
+					<div class="announcements">	
+							<?php
+							if (!empty($announcements)) {
+								?>
+								<div class="list-group">
+								<?php					
+								
+								foreach ($this->Html->ifSet($announcements, array()) as $link => $value) {
+									//$description = $string->truncateHtml($this->Html->ifSet($value->body) , 20 , true );
+									?>
+									<a class="list-group-item" href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_main/view/" . $this->Html->ifSet($value->id) . "/");?>" >
+										<h4 class="list-group-item-heading"><span class="badge pull-right"><?php $this->Html->_($value->date_added);?></span>
+											<?php $this->Html->_($value->title);?>
+										</h4>
+										<p class="list-group-item-text">											
+											<?php  $this->Html->_($value->body) ;?>											
+										</p>
+									</a>
+									<?php
+								}
+								?>								
+								</div>
+							<?php
+							// Set pagination
+							$this->Pagination->build();							
+							}
+							else {
+							?>
+								<div class="empty_section">
+									<div class="empty_box"><?php $this->_("ClientMain.index.no_announcements");?></div>
+								</div>
+							<?php
+							}					
+							?>
+						
+					</div>
+	
+				<?php
+				$this->WidgetClient->endBody();		
+				$this->WidgetClient->end();
+				
+			// Don't show this container when only rendering the widget section
+			if (!$this->Html->ifSet($render_section)) {
+					?>
+				</div>
+				<?php
+			}
+			?>
