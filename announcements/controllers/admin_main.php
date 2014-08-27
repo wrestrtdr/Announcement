@@ -348,11 +348,11 @@ class AdminMain extends AppController {
 	 */
 	public function deleteAnnouncement() {
 		$this->init();
-		// print_r($this->post);
+
 		if (!isset($this->post['id']) || !($announcement = $this->Announcements->get($this->post['id'])) ||
 			($announcement->company_id != $this->company_id))
 			$this->redirect($this->base_uri . "plugin/announcements/admin_main/");
-		// print_r($announcement);
+
 		$this->Announcements->delete($announcement->id);
 		
 		$this->flashMessage("message", Language::_("AnnouncementsPlugin.!success.announcement_deleted", true));

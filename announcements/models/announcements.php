@@ -243,20 +243,20 @@ class Announcements extends AnnouncementsModel {
 	/**
 	 * Deletes a Announcement
 	 */
-	public function delete($announcement_id) {
-		$announcement_id = $this->get($announcement_id);
-		
+	public function delete($id) {
+		$announcement_id = $this->get($id);
+
 		if ($announcement_id) {
 			// Begin a transaction
 			$this->Record->begin();
 			
 			// Delete all groups/packages related to the 
-			$this->deleteAnnouncementGroups($announcement_id);
-			$this->deleteAnnouncementPackages($announcement_id);
+			$this->deleteAnnouncementGroups($announcement_id->id);
+			$this->deleteAnnouncementPackages($announcement_id->id);
 			
 			// Delete the 
-			// $this->Record->from("nh_announcement_news")->where("id", "=", $announcement_id)->delete();
-			
+			$this->Record->from("nh_announcement_news")->where("id", "=", $announcement_id->id )->delete();
+
 			// Commit the changes
 			$this->Record->commit();
 			
@@ -546,7 +546,7 @@ class Announcements extends AnnouncementsModel {
 			}
 		}
 		
-		$truncate = str_replace("&nbsp;", "", $truncate);
+		$truncate = str_replace("&nbsp;", " ", $truncate);
 		
 		if ($strip_tags)
 			return strip_tags(htmlspecialchars_decode($truncate));

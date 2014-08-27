@@ -59,7 +59,7 @@
 								?>					
 							<div class="well well-sm">	
 								<div class="article_view">
-									<?php echo $this->TextParser->encode("markdown", $this->Html->safe($announcement->body, true));?>
+									<?php echo $this->TextParser->encode("markdown", $announcement->body);?>
 								</div>								
 							</div>		
 								<?php
