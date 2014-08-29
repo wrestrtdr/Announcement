@@ -40,3 +40,27 @@ aside li ul.open {
 	line-height: 2em !important;
 }
 
+/**** Client Side ***/ 
+
+.alert-purple { border-color: #694D9F;background: #694D9F;color: #fff; }
+.alert-info-alt { border-color: #B4E1E4;background: #81c7e1;color: #fff; }
+.alert-danger-alt { border-color: #B63E5A;background: #E26868;color: #fff; }
+.alert-warning-alt { border-color: #F3F3EB;background: #E9CEAC;color: #fff; }
+.alert-success-alt { border-color: #19B99A;background: #20A286;color: #fff; }
+
+.announcements .alert-message{	margin-bottom: 20px;    padding: 20px;    border-left: 3px solid #eee;}
+.announcements .alert-message h4{    margin-top: 0;    margin-bottom: 5px;}
+.announcements .alert-message p:last-child{    margin-bottom: 0;}
+.announcements .alert-message code{    background-color: #fff;    border-radius: 3px;}
+.announcements .alert-message-success{background-color: #F4FDF0;    border-color: #3C763D;}
+.announcements .alert-message-success h4 {color: #3C763D;}
+.announcements .alert-message-danger {background-color: #fdf7f7;border-color: #d9534f;}
+.announcements .alert-message-danger h4{color: #d9534f;}
+.announcements .alert-message-warning{    background-color: #fcf8f2;    border-color: #f0ad4e;}
+.announcements .alert-message-warning h4{    color: #f0ad4e;}
+.announcements .alert-message-info{    background-color: #f4f8fa;    border-color: #5bc0de;}
+.announcements .alert-message-info h4{    color: #5bc0de;}
+.announcements .alert-message-default{    background-color: #EEE;    border-color: #B4B4B4;}
+.announcements .alert-message-default h4{    color: #000;}
+.announcements .alert-message-notice{    background-color: #FCFCDD;    border-color: #BDBD89;}
+.announcements .alert-message-notice h4{    color: #444;}

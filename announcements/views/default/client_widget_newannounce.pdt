@@ -1,0 +1,20 @@
+		<?php
+		echo $this->Html->ifSet($message);
+
+		foreach ($announcements as $announcement ) {
+		?>
+			<div class="announcements">
+				<div class="alert-message alert-message-notice">
+					<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+					<h4><a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_main/view/" . $this->Html->ifSet($announcement->id) . "/");?>" ><?php echo $this->Html->Ifset($announcement->title);?></a></h4>
+					<p>
+						<?php echo  $this->Html->Ifset($announcement->body); ?>
+						<strong><a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_main/view/" . $this->Html->ifSet($announcement->id) . "/");?>" ><?php $this->_("ClientWidget.read_more");?></a></strong>
+					</p>
+				</div>
+			</div>
+						
+		<?php		
+		}
+		?>
+		

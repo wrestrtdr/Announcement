@@ -1,0 +1,19 @@
+		<?php
+		echo $this->Html->ifSet($message);	
+		?>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				fetchAnnounces();
+				$(this).blestaSetHeadTag("link", {media:"screen", type:"text/css", rel:"stylesheet", href: "<?php echo $this->Html->safe($this->view_dir . "css/styles.css");?>"});				
+			});
+			
+			function fetchAnnounces() {
+				$(this).blestaRequest("GET", "<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_widget/newannounce/");?>", null, function(data) {
+					if (data)
+						$(".right_content").prepend(data);
+				},
+				null,
+				{dataType:"json"});
+			}
+		</script>	

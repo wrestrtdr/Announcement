@@ -49,8 +49,8 @@ class ClientMain extends AnnouncementsController {
 		}	
 		
 		// Load the Text Parser
-		$this->helpers(array("TextParser"));
-		// $this->helpers(array("Date"));
+		// $this->helpers(array("TextParser"));
+		// $parser_syntax = "markdown";
 		
 		
 		// $this->set("string", $this->DataStructure->create("string"));
@@ -87,17 +87,6 @@ class ClientMain extends AnnouncementsController {
 			!$this->Announcements->hasAccessToAnnouncement($announcement->id, $this->company_id, $this->client_id))
 			$this->redirect($this->base_uri . "plugin/announcements/client_main/");
 		
-		// $this->components(array("Download"));
-		
-		
-		// Load the Text Parser
-		$this->helpers(array("TextParser"));
-		// $this->helpers(array("Date"));
-				
-		
-		// $this->announcement = $this->Announcements->getAnnouncementClient($this->company_id, $this->client_id , $announcement_id ) ; 
-		
-		// $this->set("string", $this->DataStructure->create("string"));
 		$this->set("announcement", $announcement);
 		$this->view->setView(null, "Announcements.default");
 	}

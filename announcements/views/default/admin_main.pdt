@@ -33,16 +33,16 @@
 				for ($i=0; $i<count($lesannouncements); $i++) {
 				?>
 				<tr class="<?php echo $this->Html->concat(" ", ($i%2 == 1) ? "odd_row" : "", "expand", "package_pricing");?>">
-					<td><?php $this->Html->_($lesannouncements[$i]->id);?></td>
-					<td><?php $this->Html->_($lesannouncements[$i]->title);?></td>
-					<td><?php $this->Html->_($lesannouncements[$i]->date_added);?></td>
+					<td><?php $this->Html->Ifset($lesannouncements[$i]->id);?></td>
+					<td><?php $this->Html->Ifset($lesannouncements[$i]->title);?></td>
+					<td><?php $this->Html->Ifset($lesannouncements[$i]->date_added);?></td>
 					<td><?php echo ($lesannouncements[$i]->public == 1  ? "Public" : "Restricted");?></td>
 					<td class="icon"><div class="<?php echo ($lesannouncements[$i]->active == 1  ? "active" : "inactive");?>">&nbsp;</div></td>					
 					<td class="last">
 						<a href="<?php echo $this->Html->safe($this->Html->safe($this->base_uri . "plugin/announcements/admin_main/editannouncement/" . $this->Html->ifSet($lesannouncements[$i]->id) . "/"));?>"><?php $this->_("AnnouncementsPlugin.index.edit");?></a>,
 						<?php
 						$this->Form->create($this->base_uri . "plugin/announcements/admin_main/deleteannouncement/");
-						$this->Form->fieldHidden("id", $this->Html->_($lesannouncements[$i]->id, true));
+						$this->Form->fieldHidden("id", $this->Html->Ifset($lesannouncements[$i]->id, true));
 						?>
 						<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/admin_main/deleteannouncement/" . $this->Html->ifSet($lesannouncements[$i]->id) . "/");?>" class="manage" rel="<?php echo $this->Html->safe($this->_("AnnouncementsPlugin.modal.delete_announcement", true));?>"><?php $this->_("AnnouncementsPlugin.index.delete");?></a>
 						<?php
