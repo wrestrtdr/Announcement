@@ -171,7 +171,7 @@ class AdminMain extends AppController {
 			else {
 				// Success
 				$this->flashMessage("message", Language::_("AnnouncementsPlugin.!success.announcement_added", true));
-				$this->redirect($this->base_uri . "plugin/announcements/admin_main/");
+				$this->redirect($this->base_uri . "plugin/announcements/admin_main/announcements/");
 			}
 		}
 		
@@ -257,7 +257,7 @@ class AdminMain extends AppController {
 				$data['permit_packages'] = "0";
 			}
 			else {
-				$data['public'] = "0";
+				$data['public'] = "0";			
 				
 				// Set availability to groups/packages
 				if (isset($this->post['available_to_client_groups']) && $this->post['available_to_client_groups'] == "1")
@@ -265,6 +265,11 @@ class AdminMain extends AppController {
 				if (isset($this->post['available_to_packages']) && $this->post['available_to_packages'] == "1")
 					$data['permit_packages'] = "1";
 			}
+			
+			if (isset($this->post['active']))
+				$data['active'] = "1";
+			else 
+				$data['active'] = "0";					
 			
 			// Set any client groups/packages
 			if (isset($data['permit_client_groups']))
@@ -286,7 +291,7 @@ class AdminMain extends AppController {
 			else {
 				// Success
 				$this->flashMessage("message", Language::_("AnnouncementsPlugin.!success.announcement_updated", true));
-				$this->redirect($this->base_uri . "plugin/announcements/admin_main/");
+				$this->redirect($this->base_uri . "plugin/announcements/admin_main/announcements/");
 			}
 		}
 		
@@ -356,7 +361,7 @@ class AdminMain extends AppController {
 		$this->Announcements->delete($announcement->id);
 		
 		$this->flashMessage("message", Language::_("AnnouncementsPlugin.!success.announcement_deleted", true));
-		$this->redirect($this->base_uri . "plugin/announcements/admin_main/");			
+		$this->redirect($this->base_uri . "plugin/announcements/admin_main/announcements/");			
 	}			
 }
 ?>

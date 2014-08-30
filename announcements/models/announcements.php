@@ -38,7 +38,7 @@ class Announcements extends AnnouncementsModel {
 	/**
 	 * Retrieves a list of Announcements available to  Client/guest, 
 	 */
-	public function getAllAvailable($company_id, $client_id = null, $page=1 , $order_by=array('date_added'=>"ASC")) {
+	public function getAllAvailable($company_id, $client_id = null, $page=1 , $order_by=array('date_added'=>"DESC")) {
 		$this->setPerPage(6);
 		$announcements = $this->getAnnouncementsAvailable($company_id, $client_id)->
 			order($order_by)->
@@ -132,7 +132,7 @@ class Announcements extends AnnouncementsModel {
 	
 	
 	
-	public function getAnnouncementClient($company_id, $client_id = null, $page=1 , $order_by=array('date_added'=>"ASC") ) {
+	public function getAnnouncementClient($company_id, $client_id = null, $page=1 , $order_by=array('date_added'=>"DESC") ) {
 		$this->setPerPage(1);
 		$announcements = $this->getAnnouncementsAvailable($company_id, $client_id)->
 			order($order_by)->
@@ -161,7 +161,7 @@ class Announcements extends AnnouncementsModel {
 	/**
 	 * Fetches all Announcements (admin_side)
 	 */
-	public function getAllAnnouncements($company_id , $page=1 , $order_by=array('date_added'=>"ASC")) {		
+	public function getAllAnnouncements($company_id , $page=1 , $order_by=array('date_added'=>"DESC")) {		
 		return $this->Record->select()->from("nh_announcement_news")->
 			where("nh_announcement_news.company_id", "=", $company_id)->
 			order($order_by)->
