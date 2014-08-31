@@ -14,12 +14,69 @@
 		$this->Widget->setLinks($tabs);
 		$this->Widget->setLinkButtons($link_buttons);				
 		$this->Widget->create($this->_("AnnouncementsPlugin.settings.boxtitle_settings", true), array('id'=>"articles"), $this->Html->ifSet($render_section, null));
-		?>
 		
-		<div class="empty_section">
-			<div class="empty_box"><?php $this->_("AnnouncementsPlugin.next_version");?></div>
-		</div>
+		if ($this->Html->ifSet($settings)) {
 
-		<?php
+			$this->Form->create();
+			?>
+			<div class="inner">
+				<div class="title_row first">
+					<h3><?php $this->_("AnnouncementsPlugin.settings.basic_heading");?></h3>
+				</div>
+				<div class="pad">
+					<ul>
+						<li>
+							<?php
+							$this->Form->label($this->_("AnnouncementsPlugin.settings.field_hide_aside", true), "hide_aside");
+							$this->Form->fieldSelect("hide_aside", array( true  => $this->_("AnnouncementsPlugin.settings.select_yes", true) , false  => $this->_("AnnouncementsPlugin.settings.select_no", true) ), ($this->Html->ifSet($settings['hide_aside']) ? true : "0"), array('id' => "hide_aside"));
+							?>
+						</li>
+						<li>
+							<?php
+							$this->Form->label($this->_("AnnouncementsPlugin.settings.field_allow_share", true), "allow_share");
+							$this->Form->fieldSelect("allow_share", array( true  => $this->_("AnnouncementsPlugin.settings.select_yes", true) , false  => $this->_("AnnouncementsPlugin.settings.select_no", true) ), ($this->Html->ifSet($settings['allow_share']) ? true : "0") , array('id' => "allow_share" ,  'disabled' => "disabled"));
+							?>
+							<span class="icon exclamation"></span><?php $this->_("AnnouncementsPlugin.next_version");?>
+						</li>
+						<li>
+							<?php
+							$this->Form->label($this->_("AnnouncementsPlugin.settings.field_allow_rss", true), "allow_rss");
+							$this->Form->fieldSelect("allow_rss", array( true  => $this->_("AnnouncementsPlugin.settings.select_yes", true) , false  => $this->_("AnnouncementsPlugin.settings.select_no", true) ), ($this->Html->ifSet($settings['allow_rss']) ? true : "0") , array('id' => "allow_rss",  'disabled' => "disabled"));
+							?>
+							<span class="icon exclamation"></span><?php $this->_("AnnouncementsPlugin.next_version");?>
+						</li>						
+					</ul>
+				</div>
+				
+				<div class="title_row">
+					<h3><?php $this->_("AnnouncementsPlugin.settings.widget_heading");?></h3>
+				</div>
+				<div class="pad">
+					<ul>
+						<li>
+							<?php
+							$this->Form->label($this->_("AnnouncementsPlugin.settings.field_client_widget", true), "client_widget");
+							$this->Form->fieldSelect("client_widget", array( true  => $this->_("AnnouncementsPlugin.settings.select_yes", true) , false  => $this->_("AnnouncementsPlugin.settings.select_no", true) ), ($this->Html->ifSet($settings['client_widget']) ? true : "0") , array('id' => "client_widget"));
+							?>
+						</li>
+						<li>
+							<?php
+							$this->Form->label($this->_("AnnouncementsPlugin.settings.field_client_widget_list", true), "client_widget_list");
+							$this->Form->fieldSelect("client_widget_list", array( '1'=>"1" , '2'=>"2" , '3'=>"3" , '4'=>"4" ), $this->Html->ifSet($settings['client_widget_list']) , array('id' => "client_widget_list"));
+							?>
+						</li>	
+					</ul>
+				</div>
+				
+				<div class="button_row">
+					<a class="btn_right submit" href=""><?php $this->_("AnnouncementsPlugin.settings.field_save");?></a>
+				</div>
+			</div>
+			<?php
+			$this->Form->end();
+
+		//($this->Html->ifSet($settings['client_widget']) ? true : false);
+		//($this->Html->ifSet($settings['client_widget'] == "settings" ? true : false))
+		}
 		$this->Widget->end();
 		?>

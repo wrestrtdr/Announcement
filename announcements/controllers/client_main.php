@@ -22,6 +22,8 @@ class ClientMain extends AnnouncementsController {
 		$this->uses(array("Announcements.Announcements"));
 		
 		$this->client_id = $this->Session->read("blesta_client_id");
+		$this->AnnouncementsSettings = $this->Companies->getSetting($this->company_id , "AnnouncementsPlugin");
+		
 		// $this->setPerPage(6);	
 		// Restore structure view location of the client portal
 		$this->structure->setDefaultView(APPDIR);
@@ -41,20 +43,14 @@ class ClientMain extends AnnouncementsController {
 		$this->announcements = $this->Announcements->getAllAvailable($this->company_id, $this->client_id , $page ) ;  
 		$this->total_announcements = $this->Announcements->getAllAnnouncementsCount($this->company_id, $this->client_id) ;  
 		
-		// print_r(count( $this->total_announcements));
-		
 		foreach ($this->announcements as $announcement ) {
 			$announcement->body = $this->Announcements->truncateHtml($announcement->body);
 			$announcement->date_added = $this->Date->cast($announcement->date_added , "d-m-Y");
 		}	
 		
-		// Load the Text Parser
-		// $this->helpers(array("TextParser"));
-		// $parser_syntax = "markdown";
-		
-		
-		// $this->set("string", $this->DataStructure->create("string"));
+
 		$this->set("announcements", $this->announcements);
+		$this->set("settings", unserialize($this->AnnouncementsSettings->value));		
 		$this->view->setView(null, "Announcements.default");
 		
 		// Overwrite default pagination settings
@@ -87,6 +83,7 @@ class ClientMain extends AnnouncementsController {
 			!$this->Announcements->hasAccessToAnnouncement($announcement->id, $this->company_id, $this->client_id))
 			$this->redirect($this->base_uri . "plugin/announcements/client_main/");
 		
+		$this->set("settings", unserialize($this->AnnouncementsSettings->value));
 		$this->set("announcement", $announcement);
 		$this->view->setView(null, "Announcements.default");
 	}

@@ -133,11 +133,11 @@ class Announcements extends AnnouncementsModel {
 	
 	
 	public function getAnnouncementClient($company_id, $client_id = null, $page=1 , $order_by=array('date_added'=>"DESC") ) {
-		$this->setPerPage(1);
+		// $this->setPerPage(1);
 		$announcements = $this->getAnnouncementsAvailable($company_id, $client_id)->
 			order($order_by)->
 			group("temp.id")->
-			limit($this->getPerPage(), 0)->
+			limit($page, 0)->
 			fetchAll();	
 		
 		return $announcements;

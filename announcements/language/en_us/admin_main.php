@@ -5,6 +5,7 @@
 
 // Global 
 $lang['AnnouncementsPlugin.next_version'] = "This Feature is NOT available in this version."; 
+$lang['AnnouncementsPlugin.index.index_body'] = "This Plugin is Free To Use , Select wich Action You needd from links Above ."; 
 $lang['AnnouncementsPlugin.select.please'] = " --- Please Select --- ";
 $lang['AnnouncementsPlugin.select.none'] = "None";
 
@@ -13,6 +14,7 @@ $lang['AnnouncementsPlugin.select.none'] = "None";
 $lang['AnnouncementsPlugin.!success.announcement_added'] = "The announcement has been successfully added.";
 $lang['AnnouncementsPlugin.!success.announcement_updated'] = "The announcement has been successfully updated.";
 $lang['AnnouncementsPlugin.!success.announcement_deleted'] = "The announcement has been successfully deleted.";
+$lang['AnnouncementsPlugin.!success.settings_saved'] = "The announcement Settings has been successfully updated.";
 
 // Modal
 $lang['AnnouncementsPlugin.modal.delete_announcement'] = "Are you sure you want to delete this announcement?";
@@ -80,12 +82,24 @@ $lang['AnnouncementsPlugin.edit.text_availablepackages'] = "Available Packages";
 
 // Settings
 $lang['AnnouncementsPlugin.settings.page_title'] = "Announcements > Settings";
-$lang['AnnouncementsPlugin.settings.boxtitle_settings'] = "Settings"; // %1$s is the name of the category that this category is to be nested under
+$lang['AnnouncementsPlugin.settings.boxtitle_settings'] = "Settings"; 
+$lang['AnnouncementsPlugin.settings.basic_heading'] = "Basic Settings"; 
+$lang['AnnouncementsPlugin.settings.widget_heading'] = "Widget Settings"; 
+$lang['AnnouncementsPlugin.settings.field_hide_aside'] = "Show ASIDE in announcement list page "; 
+$lang['AnnouncementsPlugin.settings.field_client_widget'] = "Enable widget announcement in client Area";
+$lang['AnnouncementsPlugin.settings.field_client_widget_list'] = "How many announcements  Should be shown in the widget ";
+$lang['AnnouncementsPlugin.settings.field_allow_share'] = "Allow Clients/Guests To use the share buttons";
+$lang['AnnouncementsPlugin.settings.field_allow_rss'] = "Enable RSS for announcements";
+$lang['AnnouncementsPlugin.settings.field_save'] = "Save Settings";
+
+$lang['AnnouncementsPlugin.settings.select_none'] = "None"; 
+$lang['AnnouncementsPlugin.settings.select_yes'] = "Yes , Enable ";
+$lang['AnnouncementsPlugin.settings.select_no'] = "No , Disable "; 
 
 
 // Permissions
 $lang['AnnouncementsPlugin.permissions.page_title'] = "Announcements > Permissions";
-$lang['AnnouncementsPlugin.permissions.boxtitle_permissions'] = "Permissions"; // %1$s is the name of the category that this category is to be nested under
+$lang['AnnouncementsPlugin.permissions.boxtitle_permissions'] = "Permissions"; 
 
 
 ?>

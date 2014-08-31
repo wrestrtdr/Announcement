@@ -14,6 +14,10 @@
 					$this->WidgetClient->startBody();
 					?>
 					<div class="announcement">
+					<?php
+					if ($this->Html->ifSet($settings['hide_aside'])) {
+					
+					?>
 						<aside>		
 							<div class="col-md-3 ">				
 								<div class="panel panel-default" id="accordion">
@@ -39,7 +43,14 @@
 								</div>
 							</div>
 						</aside>
-						<div class="col-md-9 ">
+						
+					<?php
+					
+					}
+					//($this->Html->ifSet($settings['hide_aside']) ? true : "0")
+					?>
+					
+						<div class="col-md-<?php echo ($this->Html->ifSet($settings['hide_aside']) ? "9" : "12");  ?>"  >
 							<ol class="breadcrumb">
 								<li>
 									<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/announcements/client_main/index/");?>">
@@ -50,7 +61,7 @@
 									<?php $this->Html->_($announcement->title);?> 			
 								</li>						
 							</ol>
-							<div class="well well-sm">
+							<div class="page-header">
 								<h2><?php $this->Html->_($announcement->title);?></h2>								
 							</div>	
 

@@ -25,6 +25,7 @@ class AdminMain extends AppController {
 		Language::loadLang("admin_main", null, PLUGINDIR . "announcements" . DS . "language" . DS);
 
 		$this->uses(array("Announcements.Announcements"));
+		$this->uses(array("companies"));
 		
 		// $this->Date = $this->parent->Date;
 		
@@ -40,6 +41,7 @@ class AdminMain extends AppController {
 		$this->structure->setView(null, $this->structure->view);
 		
 		$this->total_announcements = $this->Announcements->getListCount($this->company_id, "nh_announcement_news") ; 
+		$this->AnnouncementsSettings = $this->Companies->getSetting($this->company_id , "AnnouncementsPlugin");
 		
 		$language = Language::_("AnnouncementsPlugin." . Loader::fromCamelCase($this->action ? $this->action : "index") . ".page_title", true);
 		$this->structure->set("page_title", $language);
@@ -48,7 +50,8 @@ class AdminMain extends AppController {
 	
     public function index() {
 		$this->init();
-		$this->set("status", "settings");
+				
+		$this->set("status", "index");
 		$this->set("announcements", $this->total_announcements);
 		$this->view->setView(null, "Announcements.default");
 			
@@ -97,8 +100,19 @@ class AdminMain extends AppController {
 	 */
 	public function settings() {
 		$this->init();
+
+		if (!empty($this->post)) {
+			
+			// $this->AnnouncementsSettings = $this->post;
+			$this->Companies->setSetting($this->company_id , "AnnouncementsPlugin", serialize($this->post)  );
+			$this->setMessage("success", Language::_("AnnouncementsPlugin.!success.settings_saved", true) , false, null, false);
+			
+			$this->AnnouncementsSettings =  $this->Companies->getSetting($this->company_id , "AnnouncementsPlugin");	
+		}		
+
 		$this->set("status", "settings");
 		$this->set("announcements", $this->total_announcements);
+		$this->set("settings", unserialize($this->AnnouncementsSettings->value));		
 		$this->view->setView(null, "Announcements.default");			
 	}	
 

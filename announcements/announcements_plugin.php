@@ -13,11 +13,14 @@ class AnnouncementsPlugin extends Plugin {
 	public function __construct() {
 		Language::loadLang("announcements", null, dirname(__FILE__) . DS . "language" . DS);
 		
+        // Set the company ID
+        $this->company_id = Configure::get("Blesta.company_id");
+		
 		// Load components required by this plugin
 		Loader::loadComponents($this, array("Input", "Record"));
 		
         // Load modules for this plugun
-        Loader::loadModels($this, array("ModuleManager"));
+        Loader::loadModels($this, array("ModuleManager", "Companies"));
 		$this->loadConfig(dirname(__FILE__) . DS . "config.json");
 	}
 	
@@ -59,6 +62,9 @@ class AnnouncementsPlugin extends Plugin {
 				setKey(array("announcement_id", "package_id"), "primary")->
 				create("nh_announcement_packages", true);
 				
+			$value = array('hide_aside' => false , 'client_widget'=> true , 'client_widget_list'=> 1 , 'allow_share'=> true , 'allow_rss'=> true);
+			$this->Companies->setSetting($this->company_id , "AnnouncementsPlugin", serialize($value) );
+				
 		}
 		catch(Exception $e) {
 			// Error adding... no permission?
@@ -78,6 +84,13 @@ class AnnouncementsPlugin extends Plugin {
 		
 		// Upgrade if possible
 		if (version_compare($this->getVersion(), $current_version, ">")) {
+			// Upgrade to 1.2.0
+			if (version_compare($current_version, "1.2.0", "<")) {
+				// Add settings to databse 
+				$value = array('hide_aside' => false , 'client_widget'=> true , 'client_widget_list'=> 1 , 'allow_share'=> true , 'allow_rss'=> true);
+				$this->Companies->setSetting($this->company_id, "AnnouncementsPlugin", serialize($value) );				
+
+			}		
 			// Handle the upgrade, set errors using $this->Input->setErrors() if any errors encountered
 		}
 	}
@@ -98,6 +111,7 @@ class AnnouncementsPlugin extends Plugin {
 				$this->Record->drop("nh_announcement_news");
 				$this->Record->drop("nh_announcement_groups");
 				$this->Record->drop("nh_announcement_packages");
+				$this->Companies->unsetSetting($this->company_id , "AnnouncementsPlugin");
 			}
 			catch (Exception $e) {
 				// Error dropping... no permission?
